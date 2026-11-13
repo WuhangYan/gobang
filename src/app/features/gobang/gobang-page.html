@@ -1,0 +1,23 @@
+<!-- src/app/features/gobang/gobang-page.html -->
+<div class="gobang-page">
+  <header class="page-header">
+    <h1>Gobang</h1>
+    <p class="rule-hint">Black goes first · Five in a row wins</p>
+  </header>
+
+  <app-board
+    [board]="board()"
+    [currentPlayer]="currentPlayer()"
+    [disabled]="isGameOver()"
+    [lastMove]="lastMove()"
+    [winningLine]="winningLine()"
+    (cellClick)="onCellClick($event)"
+  />
+
+  <app-status-bar
+    [result]="result()"
+    [currentPlayer]="currentPlayer()"
+    [moveCount]="moveCount()"
+    (newGame)="resetGame()"
+  />
+</div>

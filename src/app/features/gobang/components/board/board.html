@@ -1,0 +1,8 @@
+<!-- src/app/features/gobang/components/board/board.html -->
+<canvas
+  #canvas
+  class="board-canvas"
+  (mousemove)="onMouseMove($event)"
+  (mouseleave)="onMouseLeave()"
+  (click)="onClick($event)"
+></canvas>
