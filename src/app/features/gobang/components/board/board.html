@@ -1,0 +1,120 @@
+<!-- src/app/features/gobang/components/board/board.html -->
+<svg
+  [attr.viewBox]="'0 0 ' + size + ' ' + size"
+  class="board-svg"
+  [class.disabled]="disabled()"
+  role="grid"
+  [attr.aria-label]="
+    disabled()
+      ? 'Gobang board, game over'
+      : 'Gobang board, ' + currentPlayer() + ' to move'
+  "
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- ── Gradient definitions ───────────────────────────────── -->
+  <defs>
+    <radialGradient id="stone-black-grad" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#555" />
+      <stop offset="100%" stop-color="#000" />
+    </radialGradient>
+    <radialGradient id="stone-white-grad" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#fff" />
+      <stop offset="100%" stop-color="#ccc" />
+    </radialGradient>
+  </defs>
+
+  <!-- ── Wooden background ──────────────────────────────────── -->
+  <rect [attr.width]="size" [attr.height]="size" class="board-bg" />
+
+  <!-- ── Grid lines ─────────────────────────────────────────── -->
+  @for (i of gridIndices; track i) {
+    <line
+      [attr.x1]="padding" [attr.y1]="pos(i)"
+      [attr.x2]="size - padding" [attr.y2]="pos(i)"
+      class="grid-line"
+    />
+    <line
+      [attr.x1]="pos(i)" [attr.y1]="padding"
+      [attr.x2]="pos(i)" [attr.y2]="size - padding"
+      class="grid-line"
+    />
+  }
+
+  <!-- ── Star points (天元 + 星位) ─────────────────────────── -->
+  @for (r of starCoords; track r) {
+    @for (c of starCoords; track c) {
+      <circle
+        [attr.cx]="pos(c)"
+        [attr.cy]="pos(r)"
+        r="3"
+        class="star-point"
+      />
+    }
+  }
+
+  <!-- ── Stones ─────────────────────────────────────────────── -->
+  @for (row of board(); track $index; let r = $index) {
+    @for (cell of row; track $index; let c = $index) {
+      @if (cell) {
+        <circle
+          [attr.cx]="pos(c)"
+          [attr.cy]="pos(r)"
+          [attr.r]="stoneRadius"
+          [class]="'stone stone-' + cell"
+          role="img"
+          [attr.aria-label]="
+            (cell === 'black' ? 'Black' : 'White') +
+            ' stone at row ' + (r + 1) +
+            ', column ' + (c + 1)
+          "
+        />
+      }
+    }
+  }
+
+  <!-- ── Last-move marker ───────────────────────────────────── -->
+  @if (lastMove(); as lm) {
+    <circle
+      [attr.cx]="pos(lm.col)"
+      [attr.cy]="pos(lm.row)"
+      r="4"
+      class="last-move-marker"
+    />
+  }
+
+  <!-- ── Winning-line rings ─────────────────────────────────── -->
+  @for (p of winningLine(); track $index) {
+    <circle
+      [attr.cx]="pos(p.col)"
+      [attr.cy]="pos(p.row)"
+      [attr.r]="stoneRadius + 2"
+      class="winning-ring"
+    />
+  }
+
+  <!-- ── Intersections (hit target + hover ghost) ───────────── -->
+  @for (row of board(); track $index; let r = $index) {
+    @for (cell of row; track $index; let c = $index) {
+      <g
+        class="intersection"
+        [class.occupied]="cell !== null"
+      >
+        <circle
+          [attr.cx]="pos(c)"
+          [attr.cy]="pos(r)"
+          [attr.r]="cellSize / 2"
+          class="hit-target"
+          (click)="onCellClick(r, c)"
+        />
+        @if (!cell && !disabled()) {
+          <circle
+            [attr.cx]="pos(c)"
+            [attr.cy]="pos(r)"
+            [attr.r]="stoneRadius"
+            [class]="'ghost ghost-' + currentPlayer()"
+          />
+        }
+      </g>
+    }
+  }
+</svg>

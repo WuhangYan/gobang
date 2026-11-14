@@ -1,0 +1,64 @@
+/* src/app/features/gobang/components/status-bar/status-bar.css */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface, #f8f8f8);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.status-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.status-text {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.turn-black {
+  color: #1a1a1a;
+}
+
+.turn-white {
+  color: #888;
+}
+
+.winner-black {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
+
+.winner-white {
+  color: #555;
+  text-decoration: underline;
+}
+
+.draw {
+  color: #e67e22;
+}
+
+.move-count {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.new-game-btn {
+  padding: 0.5rem 1.25rem;
+  background: #2c3e50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.new-game-btn:hover {
+  background: #1a252f;
+}

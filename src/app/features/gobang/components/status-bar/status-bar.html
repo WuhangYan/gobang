@@ -1,0 +1,17 @@
+<!-- src/app/features/gobang/components/status-bar/status-bar.html -->
+<div class="status-bar">
+  <div class="status-info">
+    <span
+      class="status-text"
+      [class]="statusClass()"
+      aria-live="polite"
+    >
+      {{ statusText() }}
+    </span>
+    <span class="move-count">Moves: {{ moveCount() }}</span>
+  </div>
+
+  <button class="new-game-btn" (click)="newGame.emit()">
+    New Game
+  </button>
+</div>
