@@ -1,4 +1,5 @@
-/* src/app/features/gobang/components/board/board.css */
+// src/app/features/gobang/components/board/board.scss
+
 :host {
   display: block;
   width: 100%;
@@ -6,11 +7,77 @@
   margin: 0 auto;
 }
 
-.board-canvas {
+.board-svg {
   display: block;
   width: 100%;
   aspect-ratio: 1;
-  cursor: pointer;
   border-radius: 4px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  user-select: none;
+}
+
+.board-bg {
+  fill: var(--board-bg, #deb887);
+}
+
+.grid-line {
+  stroke: var(--grid-color, #5c4033);
+  stroke-width: 1;
+}
+
+.star-point {
+  fill: var(--grid-color, #5c4033);
+}
+
+// ── Stones ─────────────────────────────────────────────────
+.stone {
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.stone-black { fill: url(#stone-black-grad); }
+.stone-white { fill: url(#stone-white-grad); }
+
+// ── Last-move marker & winning rings ───────────────────────
+.last-move-marker,
+.winning-ring {
+  pointer-events: none;
+}
+
+.last-move-marker {
+  fill: var(--win-glow, #e74c3c);
+}
+
+.winning-ring {
+  fill: none;
+  stroke: var(--win-glow, #e74c3c);
+  stroke-width: 3;
+}
+
+// ── Intersections & hover ──────────────────────────────────
+.hit-target {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.intersection.occupied .hit-target,
+.board-svg.disabled .hit-target {
+  cursor: default;
+}
+
+.board-svg.disabled .hit-target {
+  pointer-events: none;
+}
+
+.ghost {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease;
+}
+
+.ghost-black { fill: url(#stone-black-grad); }
+.ghost-white { fill: url(#stone-white-grad); }
+
+.intersection:not(.occupied):hover .ghost {
+  opacity: 0.35;
 }

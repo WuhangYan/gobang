@@ -1,6 +1,8 @@
 # Gobang
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.1.
+A two-player Gobang (Five in a Row) game built with Angular 22.
+
+Black goes first. First to get five stones in a row — horizontally, vertically, or diagonally — wins.
 
 ## Development server
 
